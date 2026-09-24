@@ -1,64 +1,35 @@
 # Corridas da Faculdade
 
-Estrutura inicial de um **PWA mobile-first**, com foco principal em **iPhone**.
-O desenvolvimento futuro será focado em **calendário, corridas e pagamentos**.
-A lógica de negócio ainda não foi implementada.
-
-## Diretrizes
-
-- Funcionamento 100% local no dispositivo, sem backend, sem Supabase e sem login.
-- Armazenamento futuro em IndexedDB; nenhuma base de dados é criada nesta etapa.
-- Funcionamento offline após o primeiro carregamento online e a conclusão do cache.
-- Sem serviços externos, bibliotecas remotas ou etapa de build.
-- Os dados futuros ficarão no navegador: não haverá sincronização entre dispositivos.
+PWA mobile-first para registrar corridas, calcular rateios e acompanhar pagamentos. Funciona sem backend e mantém os dados localmente no IndexedDB do navegador.
 
 ## Executar localmente
 
-Com Python 3 instalado, execute na raiz do projeto:
-
 ```sh
-python -m http.server 8000
+npm start
 ```
 
-Abra `http://localhost:8000`. Não abra o HTML diretamente com `file://`.
-O service worker precisa de HTTPS ou localhost. Para testar no iPhone, use uma
-origem HTTPS acessível pelo aparelho; o IP local do notebook via HTTP não atende
-a esse requisito. No Safari, use Compartilhar → Adicionar à Tela de Início.
-
-## Organização
-
-| Caminho | Responsabilidade futura |
-| --- | --- |
-| `index.html`, `css/`, `js/` | Página inicial, estilos e inicialização |
-| `src/domain/` | Entidades e regras de calendário, corridas e pagamentos |
-| `src/services/` | Casos de uso |
-| `src/repositories/` | Interfaces de acesso aos dados |
-| `src/storage/` | Conexão, esquema e migrações do IndexedDB |
-| `src/ui/` | Componentes e interação com a interface |
-| `tests/` | Testes futuros |
-| `assets/icons/` | Ícones PNG provisórios do PWA e da Tela de Início |
-
-As pastas reservadas contêm `.gitkeep` para serem preservadas pelo Git.
-O manifest usa caminhos relativos para permitir hospedagem em subdiretórios.
-O service worker armazena somente os arquivos iniciais listados em `SHELL`.
-Ao modificar esses arquivos, incremente a versão do cache em `service-worker.js`.
-Uma atualização aguarda o fechamento das páginas que usam a versão anterior.
-
-## Validação inicial
+Abra `http://localhost:8000`. Para rodar os testes:
 
 ```sh
-node --check js/app.js
-node --check service-worker.js
+npm test
 ```
 
-Para verificar offline, aguarde a mensagem de disponibilidade offline, recarregue
-a página e então desative a rede e recarregue novamente. A página inicial deve abrir.
-Ainda não há suíte de testes de negócio, pois o aplicativo não foi implementado.
+## Estrutura
 
-## Continuidade do desenvolvimento
+- `src/domain/`: datas, entidades e cálculos financeiros puros.
+- `src/services/`: casos de uso e backup versionado.
+- `src/storage/`: repositório IndexedDB e ponto de migrações.
+- `js/app.js`: composição e interações da interface.
+- `css/app.css`: layout mobile, temas e Liquid Glass.
+- `tests/`: testes de cálculos, histórico, pagamentos e backup.
+- `service-worker.js` e `manifest.webmanifest`: instalação e uso offline.
 
-O repositório contém todos os arquivos necessários para retomar o trabalho em
-outro ambiente a partir da branch `main`. Não é necessário instalar dependências
-nem executar serviços locais do notebook para editar o projeto em um ambiente remoto.
-Implemente futuramente o domínio, a persistência IndexedDB e a interface conforme
-as diretrizes acima, preservando o funcionamento local e offline.
+## Instalar no iPhone
+
+Publique o conteúdo em uma origem HTTPS, abra no Safari, toque em **Compartilhar** e depois em **Adicionar à Tela de Início**. Após o primeiro carregamento completo, o shell do aplicativo abre offline.
+
+## Dados e backup
+
+Os dados ficam no IndexedDB do navegador e não são enviados para nenhum servidor. Use **Ajustes → Exportar backup** regularmente. A importação valida formato, versão e referências antes de substituir o banco local.
+
+Limitação: como o app é totalmente local, dados de aparelhos diferentes não são sincronizados automaticamente.

@@ -1,0 +1,11 @@
+{
+  "name": "corridas-faculdade-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node --test --test-isolation=none tests/domain.test.js tests/backup.test.js",
+    "check": "node --check js/app.js && node --check service-worker.js && npm test"
+  }
+}

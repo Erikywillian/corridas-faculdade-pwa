@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="900" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#193945"/><stop offset="1" stop-color="#071219"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="280" y1="220" x2="760" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8FFFB" stop-opacity=".92"/><stop offset="1" stop-color="#7BE2D2" stop-opacity=".64"/>
+    </linearGradient>
+    <linearGradient id="road" x1="290" y1="200" x2="730" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#69E0CF"/><stop offset="1" stop-color="#20AFA0"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="30" stdDeviation="30" flood-color="#000" flood-opacity=".32"/></filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="55"/></filter>
+  </defs>
+  <rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+  <circle cx="780" cy="205" r="210" fill="#42D7C2" opacity=".22" filter="url(#blur)"/>
+  <circle cx="175" cy="810" r="190" fill="#5A91FF" opacity=".15" filter="url(#blur)"/>
+  <g filter="url(#shadow)">
+    <path d="M282 225c0-43 35-78 78-78h304c43 0 78 35 78 78v574c0 43-35 78-78 78H360c-43 0-78-35-78-78V225Z" fill="#F4FFFD" fill-opacity=".10" stroke="url(#glass)" stroke-width="12"/>
+    <path d="M516 244c-82 0-149 65-149 145 0 113 149 282 149 282s149-169 149-282c0-80-67-145-149-145Zm0 89c34 0 62 27 62 60s-28 60-62 60-62-27-62-60 28-60 62-60Z" fill="url(#road)"/>
+    <path d="M395 715h242" stroke="#DFFFFA" stroke-width="26" stroke-linecap="round" opacity=".9"/>
+    <path d="M438 782h156" stroke="#70DCCD" stroke-width="18" stroke-linecap="round" opacity=".75"/>
+  </g>
+  <path d="M330 188c40-36 89-54 145-54" stroke="#fff" stroke-width="13" stroke-linecap="round" opacity=".25"/>
+</svg>
