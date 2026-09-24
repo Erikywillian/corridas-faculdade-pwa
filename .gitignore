@@ -1,0 +1,25 @@
+# Dependências e artefatos de desenvolvimento
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+playwright-report/
+test-results/
+
+# Configurações locais e segredos
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+
+# Arquivos temporários e do sistema
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
+__pycache__/
+.venv/
