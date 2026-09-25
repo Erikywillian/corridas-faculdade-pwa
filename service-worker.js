@@ -1,4 +1,4 @@
-const CACHE_NAME = 'corridas-faculdade-v6';
+const CACHE_NAME = 'corridas-faculdade-v7';
 const APP_SHELL = [
   './', './index.html', './css/app.css', './js/app.js',
   './src/domain/dates.js', './src/domain/model.js', './src/domain/calculations.js',
