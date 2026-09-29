@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createInitialState, fillFixedDates, upsertRide } from '../src/domain/model.js';
+import { createInitialState, fillFixedDates, removeRide, rideForDate, upsertRide } from '../src/domain/model.js';
 import { allocateOldest, calculateAccumulated, calculateMonth, savePayment } from '../src/domain/calculations.js';
 
 const stateFor = () => createInitialState();
@@ -18,3 +18,4 @@ test('pagamento acumulado é aplicado aos meses mais antigos',()=>{const state=s
 test('saldo acumulado soma os saldos mensais',()=>{const state=stateFor();upsertRide(state,{date:'2026-08-03',status:'owner'});upsertRide(state,{date:'2026-09-01',status:'owner'});const row=calculateAccumulated(state).find(p=>p.personId==='person-lucas');assert.equal(row.balanceCents,2000);});
 test('mudança de participantes não altera histórico',()=>{const state=stateFor();upsertRide(state,{date:'2026-08-03',status:'owner'});state.people.find(p=>p.id==='person-lucas').active=false;upsertRide(state,{date:'2026-09-01',status:'owner'});assert.equal(calculateMonth(state,'2026-08').people.find(p=>p.personId==='person-lucas').baseCents,1000);assert.equal(calculateMonth(state,'2026-09').people.some(p=>p.personId==='person-lucas'),false);});
 test('preenchimento automático não sobrescreve registros',()=>{const state=stateFor();upsertRide(state,{date:'2026-09-01',status:'cancelled'});const dates=fillFixedDates(state,'2026-09','2026-09-09');assert.equal(dates.length,4);assert.equal(state.rides.find(r=>r.date==='2026-09-01').status,'cancelled');assert.equal(state.rides.length,5);});
+test('exclusão remove o registro e atualiza o rateio',()=>{const state=stateFor();upsertRide(state,{date:'2026-09-01',status:'owner'});assert.equal(calculateMonth(state,'2026-09').validCount,1);removeRide(state,'2026-09-01');assert.equal(rideForDate(state,'2026-09-01'),null);assert.equal(calculateMonth(state,'2026-09').validCount,0);});
