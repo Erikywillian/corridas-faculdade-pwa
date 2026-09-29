@@ -1,4 +1,4 @@
-const CACHE_NAME = 'corridas-faculdade-v11';
+const CACHE_NAME = 'corridas-faculdade-v12';
 const APP_SHELL = [
   './', './index.html', './css/app.css', './js/app.js',
   './src/domain/dates.js', './src/domain/model.js', './src/domain/calculations.js',
@@ -15,8 +15,8 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+  event.respondWith(fetch(event.request).then(response => {
     if (response.ok) caches.open(CACHE_NAME).then(cache => cache.put(event.request, response.clone()));
     return response;
-  }).catch(() => caches.match('./index.html'))));
+  }).catch(async () => (await caches.match(event.request)) || (event.request.mode === 'navigate' ? caches.match('./index.html') : Response.error())));
 });
